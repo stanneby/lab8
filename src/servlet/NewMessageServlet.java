@@ -13,6 +13,7 @@ import entity.ChatUser;
 @WebServlet(name = "NewMessageServlet")
 public class NewMessageServlet extends ChatServlet {
     private static final long serialVersionUID = 1L;
+    // Список слов для цензурирования
     private static final String wordsToCensor = "mat, nepotrebshina, Gendo Ikari";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,8 +26,10 @@ public class NewMessageServlet extends ChatServlet {
         // Если сообщение не пустое, то
 
         if(message!=null&& !"".equals(message)) {
+            // Разделяем строку цензуры на отдельные слова
             String[] arrayOfWordsToCensor = wordsToCensor.split(",\\s");
             for(int i = 0; i < arrayOfWordsToCensor.length; i++){
+                // Проходя массив нецензурнх слов, заменяем из в строке на *бип*
                 message = message.replaceAll(arrayOfWordsToCensor[i], "*бип*");
             }
             // По имени из сессии получить ссылку на объект ChatUse
